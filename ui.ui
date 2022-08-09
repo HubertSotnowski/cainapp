@@ -379,12 +379,12 @@ background-color: rgb(190, 190, 190);
      </property>
      <item>
       <property name="text">
-       <string>RGB</string>
+       <string>YUV</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>YUV</string>
+       <string>RGB</string>
       </property>
      </item>
     </widget>

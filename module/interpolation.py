@@ -279,7 +279,6 @@ def interpolate(
                 tread = executor.submit(read, argsread)
                 x1, x2, im1, x1n, x2n, ret = tread.result()
                 if ret == False:
-                    proc.send_signal(signal.SIGINT)
                     return None
 
             if fp16:
@@ -292,7 +291,10 @@ def interpolate(
                 except Exception as e:
                     QMessageBox.critical(self, "critical", f"error:\n{e}")
                     print(e)
-                    proc.send_signal(signal.SIGINT)
+                    while proc.poll()==None:
+                        proc.poll()
+                        print(proc.poll())
+                        proc.communicate()
                     return None
             else:
                 try:
@@ -308,9 +310,10 @@ def interpolate(
             try:
                 x1, x2, im1, x1n, x2n, ret = tread.result()
             except:
-                proc.send_signal(signal.SIGINT)
-                time.sleep(2)
-                proc.kill()
+                while proc.poll()==None:
+                    proc.poll()
+                    print(proc.poll())
+                    proc.communicate()
                 return None
 
             if lowres:
